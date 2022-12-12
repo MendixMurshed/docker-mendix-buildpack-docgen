@@ -43,6 +43,20 @@ RUN mkdir -p /opt/mendix/buildpack /opt/mendix/build &&\
     chown -R ${USER_UID}:0 /opt/mendix &&\
     chmod -R g=u /opt/mendix
 
+# Run echo tester
+RUN echo 'now will install node and chromium'
+
+# Installs latest Chromium package.
+RUN apk add --no-cache \
+      chromium \
+      nss \
+      freetype \
+      harfbuzz \
+      ca-certificates \
+      ttf-freefont \
+      nodejs \
+      npm
+
 # Copy python scripts which execute the buildpack (exporting the VCAP variables)
 COPY scripts/compilation scripts/git /opt/mendix/buildpack/
 
@@ -108,17 +122,6 @@ COPY scripts/startup scripts/vcap_application.json /opt/mendix/build/
 RUN mkdir -p /home/vcap /opt/datadog-agent/run &&\
     chown -R ${USER_UID}:0 /home/vcap /opt/datadog-agent/run &&\
     chmod -R g=u /home/vcap /opt/datadog-agent/run
-
-# Installs latest Chromium package.
-RUN apk add --no-cache \
-      chromium \
-      nss \
-      freetype \
-      harfbuzz \
-      ca-certificates \
-      ttf-freefont \
-      nodejs \
-      npm
 
 # Each comment corresponds to the script line:
 # 1. Make the startup script executable
