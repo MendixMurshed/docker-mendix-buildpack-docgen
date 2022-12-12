@@ -43,8 +43,14 @@ RUN mkdir -p /opt/mendix/buildpack /opt/mendix/build &&\
     chown -R ${USER_UID}:0 /opt/mendix &&\
     chmod -R g=u /opt/mendix
 
-# Run echo tester
-RUN echo 'now will install node and chromium'
+# Copy python scripts which execute the buildpack (exporting the VCAP variables)
+COPY scripts/compilation scripts/git /opt/mendix/buildpack/
+
+# Copy project model/sources
+COPY $BUILD_PATH /opt/mendix/build
+
+# Install the buildpack Python dependencies
+RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
 # Installs latest Chromium package.
 RUN apk add --no-cache \
@@ -57,14 +63,8 @@ RUN apk add --no-cache \
       nodejs \
       npm
 
-# Copy python scripts which execute the buildpack (exporting the VCAP variables)
-COPY scripts/compilation scripts/git /opt/mendix/buildpack/
-
-# Copy project model/sources
-COPY $BUILD_PATH /opt/mendix/build
-
-# Install the buildpack Python dependencies
-RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
+# Run echo tester
+RUN echo 'now will install node and chromium'
 
 # Add the buildpack modules
 ENV PYTHONPATH "$PYTHONPATH:/opt/mendix/buildpack/lib/:/opt/mendix/buildpack/:/opt/mendix/buildpack/lib/python3.6/site-packages/"
