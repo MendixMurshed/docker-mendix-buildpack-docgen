@@ -109,6 +109,17 @@ RUN mkdir -p /home/vcap /opt/datadog-agent/run &&\
     chown -R ${USER_UID}:0 /home/vcap /opt/datadog-agent/run &&\
     chmod -R g=u /home/vcap /opt/datadog-agent/run
 
+# Installs latest Chromium package.
+RUN apk add --no-cache \
+      chromium \
+      nss \
+      freetype \
+      harfbuzz \
+      ca-certificates \
+      ttf-freefont \
+      nodejs \
+      npm
+
 # Each comment corresponds to the script line:
 # 1. Make the startup script executable
 # 2. Update ownership of /opt/mendix so that the app can run as a non-root user
