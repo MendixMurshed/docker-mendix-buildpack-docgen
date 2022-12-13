@@ -53,7 +53,7 @@ COPY $BUILD_PATH /opt/mendix/build
 RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
 # Installs latest Chromium package.
-RUN apt add --no-cache \
+RUN apt-get install -y --no-cache \
       chromium \
       nss \
       freetype \
