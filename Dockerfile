@@ -63,7 +63,7 @@ RUN echo 'Installing node...'
 #     chromium-browser \ 
 #     chromium-chromedriver
 
-RUN curl -sL https://deb.nodesource.com/setup_18.x -o ./nodesource_setup.sh && bash /tmp/nodesource_setup.sh && apt install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_18.x -o ./nodesource_setup.sh && bash ./nodesource_setup.sh && apt install nodejs
 
 # # Install Node from github
 # RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
