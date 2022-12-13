@@ -59,17 +59,17 @@ RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpac
 RUN echo 'now will install node and chromium'
 
 # Installs latest Chromium package.
-RUN apt update && apt install -y \ 
-    chromium-browser \ 
-    chromium-chromedriver
+# RUN apt update && apt install -y \ 
+#     chromium-browser \ 
+#     chromium-chromedriver
 
-# Install Node from github
-RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
-    && git clone https://github.com/nodejs/node.git \
-    && cd node \
-    && ./configure \
-    && make \
-    && sudo make install
+# # Install Node from github
+# RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+#     && git clone https://github.com/nodejs/node.git \
+#     && cd node \
+#     && ./configure \
+#     && make \
+#     && sudo make install
 
 RUN node --version
 
