@@ -53,15 +53,16 @@ COPY $BUILD_PATH /opt/mendix/build
 RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
 # Installs latest Chromium package.
-RUN apt-get install -y \
-      chromium \
-      nss \
-      freetype \
-      harfbuzz \
-      ca-certificates \
-      ttf-freefont \
-      nodejs \
-      npm
+RUN apt update && apt install -y \ 
+    chromium-browser \ 
+    chromium-chromedriver\
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs \
+    npm
 
 # Run echo tester
 RUN echo 'now will install node and chromium'
