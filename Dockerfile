@@ -54,14 +54,14 @@ COPY $BUILD_PATH /opt/mendix/build
 # Install the buildpack Python dependencies
 RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
+#Installs latest Chromium package.
+RUN echo 'Installing Chromium...'
+RUN apt update && apt install -y \ 
+    chromium-browser \ 
+    chromium-chromedriver
 
 # Run echo tester
 RUN echo 'Installing node...'
-
-# Installs latest Chromium package.
-# RUN apt update && apt install -y \ 
-#     chromium-browser \ 
-#     chromium-chromedriver
 
 RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
 # RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
