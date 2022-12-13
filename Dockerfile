@@ -59,9 +59,6 @@ RUN apt update && apt install -y \
     nodejs \
     npm
 
-# Check what nodejs I am installing!
-RUN apt-cache info node
-
 # Install Node from github
 RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
     && git clone https://github.com/nodejs/node.git \
@@ -69,9 +66,6 @@ RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
     && ./configure \
     && make \
     && sudo make install
-
-# Check what Node I am installing from github!
-RUN apt-cache info node
 
 # Run echo tester
 RUN echo 'now will install node and chromium'
