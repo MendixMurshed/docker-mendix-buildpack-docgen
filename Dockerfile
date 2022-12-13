@@ -12,8 +12,10 @@ FROM ${BUILDER_ROOTFS_IMAGE} AS builder
 # Build-time variables
 ARG BUILD_PATH=project
 ARG DD_API_KEY
+
 # CF buildpack version
 ARG CF_BUILDPACK=v4.30.2
+
 # CF buildpack download URL
 ARG CF_BUILDPACK_URL=https://github.com/mendix/cf-mendix-buildpack/releases/download/${CF_BUILDPACK}/cf-mendix-buildpack.zip
 
@@ -52,12 +54,14 @@ COPY $BUILD_PATH /opt/mendix/build
 # Install the buildpack Python dependencies
 RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
+
+# Run echo tester
+RUN echo 'now will install node and chromium'
+
 # Installs latest Chromium package.
 RUN apt update && apt install -y \ 
     chromium-browser \ 
-    chromium-chromedriver \
-    nodejs \
-    npm
+    chromium-chromedriver
 
 # Install Node from github
 RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
@@ -67,8 +71,7 @@ RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
     && make \
     && sudo make install
 
-# Run echo tester
-RUN echo 'now will install node and chromium'
+RUN node --version
 
 # Add the buildpack modules
 ENV PYTHONPATH "$PYTHONPATH:/opt/mendix/buildpack/lib/:/opt/mendix/buildpack/:/opt/mendix/buildpack/lib/python3.6/site-packages/"
@@ -103,6 +106,7 @@ ARG UNINSTALL_BUILD_DEPENDENCIES=true
 
 # Set the user ID
 ARG USER_UID=1001
+
 # Set the home path
 ENV HOME=/opt/mendix/build
 
