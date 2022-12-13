@@ -56,11 +56,6 @@ RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpac
 RUN apt update && apt install -y \ 
     chromium-browser \ 
     chromium-chromedriver\
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
     nodejs \
     npm
 
