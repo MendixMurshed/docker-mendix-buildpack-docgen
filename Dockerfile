@@ -56,6 +56,7 @@ RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpac
 
 #Installs latest Chromium package.
 RUN echo 'Installing Chromium...'
+
 RUN apt update && apt install -y \ 
     chromium-browser \ 
     chromium-chromedriver
@@ -149,10 +150,6 @@ RUN chmod +rx /opt/mendix/build/startup &&\
 
 USER ${USER_UID}
 
-# Check mendix directory
-RUN echo 'listing /opt/mendix/build/startup directory content...'
-RUN ls /opt/mendix/build/startup
-
 # Copy jre from build container
 COPY --from=builder /var/mendix/build/.local/usr /opt/mendix/build/.local/usr
 
@@ -161,6 +158,9 @@ COPY --from=builder /var/mendix/build/runtimes /opt/mendix/build/runtimes
 
 # Copy build artifacts from build container
 COPY --from=builder /opt/mendix /opt/mendix
+
+# Check mendix directory
+RUN ls /opt/mendix
 
 # Use nginx supplied by the base OS
 ENV NGINX_CUSTOM_BIN_PATH=/usr/sbin/nginx
