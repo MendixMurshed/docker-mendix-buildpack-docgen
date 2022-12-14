@@ -63,7 +63,9 @@ RUN apt update && apt install -y \
 # Run echo tester
 RUN echo 'Installing node...'
 
-RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
+RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh \
+    && apt install -y build-essential nodejs
 # RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
 # RUN curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh -o install_nvm.sh && bash install_nvm.sh && apt install -y build-essential nodejs
 
@@ -148,7 +150,7 @@ RUN chmod +rx /opt/mendix/build/startup &&\
 USER ${USER_UID}
 
 # Check mendix directory
-RUN ls /opt/mendix/build
+RUN ls /opt/mendix/build/startup
 
 # Copy jre from build container
 COPY --from=builder /var/mendix/build/.local/usr /opt/mendix/build/.local/usr
