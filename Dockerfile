@@ -150,6 +150,7 @@ RUN chmod +rx /opt/mendix/build/startup &&\
 USER ${USER_UID}
 
 # Check mendix directory
+RUN echo 'listing /opt/mendix/build/startup directory content...'
 RUN ls /opt/mendix/build/startup
 
 # Copy jre from build container
