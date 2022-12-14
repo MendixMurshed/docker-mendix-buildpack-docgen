@@ -54,32 +54,6 @@ COPY $BUILD_PATH /opt/mendix/build
 # Install the buildpack Python dependencies
 RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
-#Installs latest Chromium package.
-RUN echo 'Installing Chromium...'
-
-RUN apt update && apt install -y \ 
-    chromium-browser \ 
-    chromium-chromedriver
-
-# Run echo tester
-RUN echo 'Installing node...'
-
-RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
-    && bash nodesource_setup.sh \
-    && apt install -y build-essential nodejs
-# RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
-# RUN curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh -o install_nvm.sh && bash install_nvm.sh && apt install -y build-essential nodejs
-
-# # Install Node from github
-# RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
-#     && git clone https://github.com/nodejs/node.git \
-#     && cd node \
-#     && ./configure \
-#     && make \
-#     && sudo make install
-
-RUN node --version
-
 # Add the buildpack modules
 ENV PYTHONPATH "$PYTHONPATH:/opt/mendix/buildpack/lib/:/opt/mendix/buildpack/:/opt/mendix/buildpack/lib/python3.6/site-packages/"
 
@@ -159,8 +133,39 @@ COPY --from=builder /var/mendix/build/runtimes /opt/mendix/build/runtimes
 # Copy build artifacts from build container
 COPY --from=builder /opt/mendix /opt/mendix
 
+##############################################################################
+# below 6 commands to prepare for pupeteer service
+
+#Installs latest Chromium package.
+RUN echo 'Installing Chromium...'
+
+RUN apt update && apt install -y \ 
+    chromium-browser \ 
+    chromium-chromedriver
+
+# Run echo tester
+RUN echo 'Installing node...'
+
+RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh \
+    && apt install -y build-essential nodejs
+
+# RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
+# RUN curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh -o install_nvm.sh && bash install_nvm.sh && apt install -y build-essential nodejs
+
+# # Install Node from github
+# RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+#     && git clone https://github.com/nodejs/node.git \
+#     && cd node \
+#     && ./configure \
+#     && make \
+#     && sudo make install
+
+RUN node --version
+
 # Check mendix directory
-RUN ls /opt/mendix
+RUN ls /opt/mendix/build
+##############################################################################
 
 # Use nginx supplied by the base OS
 ENV NGINX_CUSTOM_BIN_PATH=/usr/sbin/nginx
