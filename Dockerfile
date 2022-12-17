@@ -165,10 +165,9 @@ COPY --from=builder /var/mendix/build/.local/usr /opt/mendix/build/.local/usr
 COPY --from=builder /var/mendix/build/runtimes /opt/mendix/build/runtimes
 
 # Copy build artifacts from build container
-COPY --from=builder /opt/mendix /opt/mendix
+COPY --from=builder /opt/mendix /opt/       
 
 ##############################################################################
-RUN node --version
 
 # Check mendix directory
 RUN ls /opt/mendix/build
