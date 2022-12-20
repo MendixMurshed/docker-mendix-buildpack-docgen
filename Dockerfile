@@ -136,7 +136,7 @@ RUN apt update && apt install -y \
 RUN echo 'Installing node...'
 
 # Installing curl
-RUN apt-get install curl
+RUN apt-get -y install curl
 
 # Installing Node using curl
 RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
