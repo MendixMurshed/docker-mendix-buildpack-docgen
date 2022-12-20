@@ -135,10 +135,22 @@ RUN apt update && apt install -y \
 # Run echo tester
 RUN echo 'Installing node...'
 
-RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
-    && bash nodesource_setup.sh \
-    && apt install -y build-essential nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
+#     && bash nodesource_setup.sh \
+#     && apt install -y build-essential nodejs
 
+# RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y build-essential nodejs
+# RUN curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh -o install_nvm.sh && bash install_nvm.sh && apt install -y build-essential nodejs
+
+# Install Node from github
+RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+    && git clone https://github.com/nodejs/node.git \
+    && cd node \
+    && ./configure \
+    && make \
+    && sudo make install
+
+# Check installed node version 
 RUN node --version
 
 # Check mendix directory
