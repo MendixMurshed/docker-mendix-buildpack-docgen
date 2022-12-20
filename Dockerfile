@@ -154,7 +154,7 @@ COPY --from=builder /var/mendix/build/.local/usr /opt/mendix/build/.local/usr
 COPY --from=builder /var/mendix/build/runtimes /opt/mendix/build/runtimes
 
 # Copy build artifacts from build container
-COPY --from=builder /opt/mendix /opt/
+COPY --from=builder /opt/mendix /opt/mendix
 
 ##############################################################################
 # below 6 commands to prepare for pupeteer service
