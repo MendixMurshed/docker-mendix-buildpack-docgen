@@ -122,17 +122,6 @@ RUN chmod +rx /opt/mendix/build/startup &&\
     chmod -R g=u /opt/mendix &&\
     ln -s /opt/mendix/.java /root
 
-USER ${USER_UID}
-
-# Copy jre from build container
-COPY --from=builder /var/mendix/build/.local/usr /opt/mendix/build/.local/usr
-
-# Copy Mendix Runtime from build container
-COPY --from=builder /var/mendix/build/runtimes /opt/mendix/build/runtimes
-
-# Copy build artifacts from build container
-COPY --from=builder /opt/mendix /opt/mendix
-
 ##############################################################################
 # below 6 commands to prepare for pupeteer service
 
@@ -155,6 +144,17 @@ RUN node --version
 # Check mendix directory
 RUN ls /opt/mendix/build
 ##############################################################################
+
+USER ${USER_UID}
+
+# Copy jre from build container
+COPY --from=builder /var/mendix/build/.local/usr /opt/mendix/build/.local/usr
+
+# Copy Mendix Runtime from build container
+COPY --from=builder /var/mendix/build/runtimes /opt/mendix/build/runtimes
+
+# Copy build artifacts from build container
+COPY --from=builder /opt/mendix /opt/mendix
 
 ##############################################################################
 
