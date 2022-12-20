@@ -51,29 +51,6 @@ COPY scripts/compilation scripts/git /opt/mendix/buildpack/
 # Copy project model/sources
 COPY $BUILD_PATH /opt/mendix/build
 
-##############################################################################
-# below 6 commands to prepare for pupeteer service
-
-#Installs latest Chromium package.
-RUN echo 'Installing Chromium...'
-
-RUN apt update && apt install -y \ 
-    chromium-browser \ 
-    chromium-chromedriver
-
-# Run echo tester
-RUN echo 'Installing node...'
-
-RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
-    && bash nodesource_setup.sh \
-    && apt install -y build-essential nodejs
-
-RUN node --version
-
-# Check mendix directory
-RUN ls /opt/mendix/build
-##############################################################################
-
 # Install the buildpack Python dependencies
 RUN chmod +rx /opt/mendix/buildpack/bin/bootstrap-python && /opt/mendix/buildpack/bin/bootstrap-python /opt/mendix/buildpack /tmp/buildcache
 
