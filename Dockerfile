@@ -158,7 +158,7 @@ RUN curl -sL https://deb.nodesource.com/setup_17.x -o nodesource_setup.sh \
 RUN node --version
 
 # Check mendix directory
-RUN ls /opt/mendix/build/bin
+RUN ls /opt/mendix/build
 ##############################################################################
 
 USER ${USER_UID}
